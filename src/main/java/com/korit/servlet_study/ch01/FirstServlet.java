@@ -9,17 +9,6 @@ import java.io.IOException;
 
 public class FirstServlet extends HttpServlet {
 
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("요청 들어옴");
-    }
-
-    @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("서비스 메서드 요청 들어옴");
-    }
-
     public FirstServlet() {
         System.out.println("FirstServlet 생성자 호출");
     }
@@ -28,11 +17,22 @@ public class FirstServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         System.out.println("초기화");
         config.getServletContext().setAttribute("age", 32);
-
     }
 
     @Override
     public void destroy() {
         System.out.println("소멸");
     }
+
+    @Override
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("서비스 메서드 요청 들어옴");
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("요청 들어옴");
+    }
+
+
 }
