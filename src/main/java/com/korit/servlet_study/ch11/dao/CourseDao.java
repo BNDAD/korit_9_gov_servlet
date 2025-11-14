@@ -5,10 +5,7 @@ import com.korit.servlet_study.ch11.entity.Course;
 import com.korit.servlet_study.ch11.util.DBConnectionMgr;
 import lombok.RequiredArgsConstructor;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 @RequiredArgsConstructor
 public class CourseDao {
@@ -28,13 +25,28 @@ public class CourseDao {
             """;
             ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, course.getCourseCode());
+            ps.setString(2, course.getCourseName());
+            ps.setInt(3, course.getProfessorId());
+            ps.setInt(4, course.getCredit());
+            ps.setInt(5, course.getEnrollmentCapacity());
+            ps.setString(6, course.getClassroom());
 
+            if (ps.executeUpdate() < 1) {
+                throw new SQLException();
+            }
 
+            rs = ps.getGeneratedKeys();
+            while (rs.next()) {
+                int courseId = rs.getInt(1);
+                course.setCourseId(courseId);
+            }
 
 
 
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }finally {
+            mgr.freeConnection(con, ps, rs);
         }
     }
 }

@@ -3,11 +3,10 @@ package com.korit.servlet_study.ch11;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.korit.servlet_study.ch11.dao.ProfessorDao;
+import com.korit.servlet_study.ch11.dto.ProfessorDto;
 import com.korit.servlet_study.ch11.entity.Professor;
 import com.korit.servlet_study.ch11.service.ProfessorService;
 import com.korit.servlet_study.ch11.util.DBConnectionMgr;
-import lombok.RequiredArgsConstructor;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,4 +38,10 @@ public class ProfessorServlet extends HttpServlet {
     }
 
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ProfessorDto professorDto = objectMapper.readValue(req.getReader(), ProfessorDto.class);
+        Professor savedProfessor = professorService.saveProfessor(professorDto);
+        objectMapper.writeValue(resp.getWriter(), savedProfessor);
+    }
 }

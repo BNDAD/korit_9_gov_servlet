@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 @Builder
 public class Course {
+    private int courseId;
     private String courseCode;
     private String courseName;
     private int professorId;

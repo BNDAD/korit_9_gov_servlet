@@ -2,6 +2,7 @@ package com.korit.servlet_study.ch11.service;
 
 
 import com.korit.servlet_study.ch11.dao.ProfessorDao;
+import com.korit.servlet_study.ch11.dto.ProfessorDto;
 import com.korit.servlet_study.ch11.entity.Professor;
 import lombok.RequiredArgsConstructor;
 
@@ -14,5 +15,11 @@ public class ProfessorService {
 
     public List<Professor> getProfessors() {
         return professorDao.findAll();
+    }
+
+    public Professor saveProfessor(ProfessorDto professorDto) {
+        Professor professor = professorDto.toEntity();
+        professorDao.insert(professor);
+        return professor;
     }
 }
